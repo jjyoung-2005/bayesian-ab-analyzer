@@ -1,5 +1,7 @@
 import numpy as np
 import streamlit as st
+import matplotlib.pyplot as plt
+from scipy import stats
 
 def bayesian_ab(control_successes, control_trials, variant_successes, variant_trials, n_samples=100000):
     control_samples = np.random.beta(control_successes, control_trials - control_successes, size=n_samples)
@@ -36,7 +38,19 @@ def decision_engine(results, min_lift):
         else:
             return "Abandon it"
 
+def plot_posteriors(results, control_successes, control_trials, variant_successes, variant_trials):
+    x_range = np.linspace(0, 1, 1000)
+    control_curve = stats.beta.pdf(x_range, control_successes, control_trials - control_successes)
+    variant_curve = stats.beta.pdf(x_range, variant_successes, variant_trials - variant_successes)
 
+    fig, ax = plt.subplots()
+    ax.plot(x_range, control_curve, color = "red", label = "control")
+    ax.plot(x_range, variant_curve, color = "blue", label = "variance")
+    ax.set_title("Beta Distribution Curves")
+    ax.set_xlabel("Conversion Rate")
+    ax.legend()
+    return fig
+        
 st.title("Bayesian UX Experiment Analyzer")
 st.subheader("Make confident shipping decisions from A/B test data")
 
@@ -61,6 +75,8 @@ min_lift = st.slider("Minimum meaningful lift (%)", min_value=1, max_value=20, v
 if st.button("Analyze"):
     results = bayesian_ab(control_successes, control_trials, variant_successes, variant_trials)
     decision = decision_engine(results, min_lift)
+    fig = plot_posteriors(results, control_successes, control_trials, variant_successes, variant_trials)
+    st.pyplot(fig)
     
     st.divider()
     st.header("Results")
@@ -80,3 +96,16 @@ if st.button("Analyze"):
     st.subheader("Credible Intervals")
     st.write(f"Control (A): {results['Control Interval'][0]:.3f} – {results['Control Interval'][1]:.3f}")
     st.write(f"Variant (B): {results['Variant Interval'][0]:.3f} – {results['Variant Interval'][1]:.3f}")
+
+def plot_posteriors(results, control_successes, control_trials, variant_successes, variant_trials):
+    x_range = np.linspace(0, 1, 1000)
+    control_curve = stats.beta.pdf(x_range, control_successes, control_trials - control_successes)
+    variant_curve = stats.beta.pdf(x_range, variant_successes, variant_trials - variant_successes)
+
+    fig, ax = plt.subplots()
+    ax.plot(x_range, control_curve, color = "red", label = "control")
+    ax.plot(x_range, variant_curve, color = "blue", label = "variance")
+    ax.set_title("Beta Distribution Curves")
+    ax.set_xlabel("Conversion Rate")
+    ax.legend()
+    return fig
