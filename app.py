@@ -53,7 +53,7 @@ def plot_posteriors(results, control_successes, control_trials, variant_successe
     return fig
         
 st.title("Bayesian UX Experiment Analyzer")
-st.subheader("Make confident shipping decisions from A/B test data")
+st.subheader("Stop guessing. Start shipping. A Bayesian A/B test analyzer that tells you what your experiment data actually means.")
 
 st.divider()
 st.header("Experiment Inputs")
