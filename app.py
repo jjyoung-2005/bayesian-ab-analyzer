@@ -44,10 +44,11 @@ def plot_posteriors(results, control_successes, control_trials, variant_successe
     variant_curve = stats.beta.pdf(x_range, variant_successes, variant_trials - variant_successes)
 
     fig, ax = plt.subplots()
-    ax.plot(x_range, control_curve, color = "red", label = "control")
-    ax.plot(x_range, variant_curve, color = "blue", label = "variance")
+    ax.plot(x_range, control_curve, color = "red", label = "Control (A)")
+    ax.plot(x_range, variant_curve, color = "blue", label = "Variant (B)")
     ax.set_title("Beta Distribution Curves")
     ax.set_xlabel("Conversion Rate")
+    ax.set_ylabel("Probability Density")
     ax.legend()
     return fig
         
@@ -97,15 +98,3 @@ if st.button("Analyze"):
     st.write(f"Control (A): {results['Control Interval'][0]:.3f} – {results['Control Interval'][1]:.3f}")
     st.write(f"Variant (B): {results['Variant Interval'][0]:.3f} – {results['Variant Interval'][1]:.3f}")
 
-def plot_posteriors(results, control_successes, control_trials, variant_successes, variant_trials):
-    x_range = np.linspace(0, 1, 1000)
-    control_curve = stats.beta.pdf(x_range, control_successes, control_trials - control_successes)
-    variant_curve = stats.beta.pdf(x_range, variant_successes, variant_trials - variant_successes)
-
-    fig, ax = plt.subplots()
-    ax.plot(x_range, control_curve, color = "red", label = "control")
-    ax.plot(x_range, variant_curve, color = "blue", label = "variance")
-    ax.set_title("Beta Distribution Curves")
-    ax.set_xlabel("Conversion Rate")
-    ax.legend()
-    return fig
