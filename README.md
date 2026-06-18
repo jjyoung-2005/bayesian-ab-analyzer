@@ -6,7 +6,7 @@
 
 ## The Problem
 
-Most A/B test tools tell you *if* your variant won. THey don't tell you *what to do about it*.
+Most A/B test tools tell you *if* your variant won. They don't tell you *what to do about it*.
 
 Product teams routinely ship losers and abandon winners. The goal for this tool is to fix that problem by combining Bayesian inference with a behavioral decision engine that gives clear recommendations.
 
@@ -74,7 +74,7 @@ expected_lift = np.mean((variant_samples - control_samples) / control_samples)
 
 ### Decision Engine
 
-The Decision Engine takes the Bayesian outputs and a lift threshold and maps them to one of four outcomes to help with next steps. Lift is evaluated first -- if it falls below the threshold the result is either "Abandon It" or "Investigate Further".
+The Decision Engine takes the Bayesian outputs and a lift threshold and maps them to one of four outcomes to help with next steps. Lift is evaluated first - if it falls below the threshold the result is either "Abandon It" or "Investigate Further".
 
 ### Background
 
